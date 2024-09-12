@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Locatability</title>
+  <script src="Locatability.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+
+
+<body>
+  <div id="dashboard">
+  <div id="title-container">
+    <h1 class="main-title"> Input your setting</h1>
+  </div>
+  <div id="inputField">
+    <input id="setsize" value = "set size" placeholder="12" type = "number" ></input>
+    <label > Gridded Layouts </label>
+    <input type="radio" id="gridded" data-clicked="false" value = "gridded"  onclick="toggleLayouts(this)">
+    <label > Non-Gridded Layouts </label>
+    <input type="radio" id="nongridded" data-clicked="true" value = "nongridded"  onclick="toggleLayouts(this)">
+    <!-- <input type="search" id="target location" value = "set size"  onkeydown="OnKeyDown(event)"> -->
+    <input type="checkbox" id="Luminance" value = "Luminance" checked  onclick="toggleFeatures(this)">
+      <label >Luminance</label>
+
+      <input type="checkbox" id="Hue" value = "Hue" checked  onclick="toggleFeatures(this)">
+      <label >Hue</label>
+
+      <input type="checkbox" id="D3Color" value = "D3Color" checked  onclick="toggleFeatures(this)">
+      <label >D3Color</label>
+
+      <input type="checkbox" id="Size" value = "Size" checked  onclick="toggleFeatures(this)">
+      <label >Size</label>
+      
+      <input type="checkbox" id="Length" value = "Length" checked  onclick="toggleFeatures(this)">
+      <label >Length</label>
+      
+      <input type="checkbox" id="Orientation" value = "Orientation" checked  onclick="toggleFeatures(this)">
+      <label >Orientation</label>
+
+      <input type="checkbox" id="Shape" value = "Shape" checked  onclick="toggleFeatures(this)">
+      <label >Shape</label>
+      
+  </div>
+</div>
+<div id="output">
+  <h1 >we recommend you to use </h1>
+  <label id="visualVariable" >Luminance </label>
+  <h1>which will take approximately </h1>
+  <label id="taskTime" >631 milliseconds</label>
+  <h1 > to find the target  </h1>
+  
+</div>
+  <div id="stimulus-container">
+  </div>
+</body>
+<script>
+  document.getElementById('nongridded').checked = true;
+  document.getElementById('setsize').addEventListener('input', updateSetSize);
+
+</script>
+</html>
