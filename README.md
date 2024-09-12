@@ -1,6 +1,7 @@
 ## Hi there 👋
-
-<!--
+This is the web application that help interface designers and visualization practitioners select appropriate visual variables to support visual location tasks. 
+The model is based on our research on the locatability and locatability robustness.
+<!-- 
 **Locatability/Locatability** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
 Here are some ideas to get you started:
