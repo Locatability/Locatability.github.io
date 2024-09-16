@@ -3,45 +3,78 @@
 <head>
   <title>Locatability</title>
   <script src="Locatability.js"></script>
+  <script src="Stimulus.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <link rel="stylesheet" href="styles.css"> 
 </head>
 
 
 <body>
-  <div id="dashboard">
-  <div id="title-container">
-    <h1 class="main-title"> Input your setting</h1>
-  </div>
-  <div id="inputField">
-    <input id="setsize" value = "set size" placeholder="12" type = "number" ></input>
-    <label > Gridded Layouts </label>
-    <input type="radio" id="gridded" data-clicked="false" value = "gridded"  onclick="toggleLayouts(this)">
-    <label > Non-Gridded Layouts </label>
-    <input type="radio" id="nongridded" data-clicked="true" value = "nongridded"  onclick="toggleLayouts(this)">
-    <!-- <input type="search" id="target location" value = "set size"  onkeydown="OnKeyDown(event)"> -->
-    <input type="checkbox" id="Luminance" value = "Luminance" checked  onclick="toggleFeatures(this)">
-      <label >Luminance</label>
+    <div id="locatability">
+      <b  id = "title">Locatability</b>
+      <b   style ="  position: absolute;
+      width: 20vw;
+      top:10%;
+      left: 2%;
+      font-size: 1vw;
+      font-family: Arial, sans-serif;
+      color: #858585;">Choosing Visual Variables to Support Visual Location</b>
+    </div>
+    <div id = "featureBanner">
+      <!-- <input type="search" id="target location" value = "set size"  onkeydown="OnKeyDown(event)"> -->
+      <div class = "feature-container" style ="left: 0%;">
+        <input type="checkbox" id="Luminance" value = "Luminance" checked  onclick="toggleFeatures(this)">
 
-      <input type="checkbox" id="Hue" value = "Hue" checked  onclick="toggleFeatures(this)">
-      <label >Hue</label>
+        <label class = "feature-text">Luminance</label>
 
-      <input type="checkbox" id="D3Color" value = "D3Color" checked  onclick="toggleFeatures(this)">
-      <label >D3Color</label>
+      </div>
 
-      <input type="checkbox" id="Size" value = "Size" checked  onclick="toggleFeatures(this)">
-      <label >Size</label>
-      
-      <input type="checkbox" id="Length" value = "Length" checked  onclick="toggleFeatures(this)">
-      <label >Length</label>
-      
-      <input type="checkbox" id="Orientation" value = "Orientation" checked  onclick="toggleFeatures(this)">
-      <label >Orientation</label>
+      <div class = "feature-container" style ="left: 14%;">
+        <input type="checkbox" id="Hue" value = "Hue" checked  onclick="toggleFeatures(this)">
+        <label class = "feature-text" >Hue</label>
+      </div>
+      <div class = "feature-container" style ="left: 28%;">
+        <input type="checkbox" id="D3Color" value = "D3Color" checked  onclick="toggleFeatures(this)">
+        <label class = "feature-text" >D3Color</label>
+      </div>
+      <div class = "feature-container" style ="left: 42%;">
+        <input type="checkbox" id="Size" value = "Size" checked  onclick="toggleFeatures(this)">
+        <label class = "feature-text" >Size</label>
+      </div>
+      <div class = "feature-container" style ="left: 56%;"> 
+        <input type="checkbox" id="Length" value = "Length" checked  onclick="toggleFeatures(this)">
+        <label class = "feature-text" >Length</label>
+      </div>
+      <div class = "feature-container" style ="left: 72%;">  
+        <input type="checkbox" id="Orientation" value = "Orientation" checked  onclick="toggleFeatures(this)">
+        <label class = "feature-text" >Orientation</label>
+      </div>
+      <div class = "feature-container" style ="left: 86%;">
+        <input type="checkbox" id="Shape" value = "Shape" checked  onclick="toggleFeatures(this)">
+        <label class = "feature-text" >Shape</label>
+      </div>
+    </div>
 
-      <input type="checkbox" id="Shape" value = "Shape" checked  onclick="toggleFeatures(this)">
-      <label >Shape</label>
-      
-  </div>
-</div>
+    <div id="inputField">
+      <div id = "layouts" class = "factor-container" style ="background-color: #fbb4ae;">
+        <input type="radio" id="gridded" data-clicked="false" value = "gridded"  onclick="toggleLayouts(this)">
+        <label class = "factor-text"> Grid Layouts </label><br>
+        <input type="radio" id="nongridded" data-clicked="true" value = "nongridded"  onclick="toggleLayouts(this)">
+        <label class = "factor-text" > Non-Grid Layouts </label>
+      </div>
+
+      <div id = "setsizes" class = "factor-container" style ="background-color: #b3cde3;">
+        <label class = "factor-text"> Set Size (The number of total objects) </label><br>
+        <!-- <input id="setsize" value = "set size" placeholder="12"  min="12" max="768" type = "number" ></input> -->
+        <input type="range" id="SetSizeslider" min="12" max="768" step="1" value="12">
+        <input type="number" id="SetSizeNum" min="12" max="768" step="1" value="12">
+      </div>
+
+      <div id = "location" class = "factor-container" style ="background-color: #fed9a6;">
+        <label class = "factor-text"> Target Location  </label><br>
+        <input id="targetlocation"  placeholder="0" type = "number" ></input>
+      </div>
+    </div>
 <div id="output">
   <h1 >we recommend you to use </h1>
   <label id="visualVariable" >Luminance </label>
@@ -50,12 +83,58 @@
   <h1 > to find the target  </h1>
   
 </div>
-  <div id="stimulus-container">
+  <div id="stimulus-container" style ="background-color: #808080;">
   </div>
 </body>
 <script>
   document.getElementById('nongridded').checked = true;
-  document.getElementById('setsize').addEventListener('input', updateSetSize);
+  //document.getElementById('setsize').addEventListener('input', updateSetSize);
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('SetSizeslider');
+    const numberInput = document.getElementById('SetSizeNum');
 
+    // Update number input when slider value changes
+    slider.addEventListener('input', () => {
+      numberInput.value = slider.value;
+      updateSetSize(slider.value);
+    });
+
+    // Update slider when number input value changes
+    numberInput.addEventListener('input', () => {
+      slider.value = numberInput.value;
+      updateSetSize(numberInput.value);
+    });
+    
+});
+  var Feature ={
+  targetShape: "rectangle",
+  distractorShape: "rectangle",
+  targetColor: "hsl(0, 0%, 100%)",
+  distractorColor: "hsl(0, 0%, 0%)",
+  tdSizeRatio: 1,//the ratio between target size and distractor size
+  tdLengthRatio: 1, //the ratio between target length and distractor length
+  targetAngle: 0,
+  distractorAngle: 0,
+  curvature: null,
+  closure: null,
+  intersection: null,
+  terminator: null,
+  activeFeature: "Hue"
+}
+
+// The data structure that store all necessary factor info for an experiment
+var Factor ={
+  targetNumber: 1,
+  elementNumber: 12,
+  targetLocation: {}, //Has 4 variables - left, right, top, middle 
+  orientation: 0,
+  spatialPattern: null, //string: "Gridded", "Randomized"
+  proximity : null,  // type: float
+  activeFactor: "None",
+  row: 0,
+  col: 0
+}
+
+generateStimulus(Feature,Factor); 
 </script>
 </html>
