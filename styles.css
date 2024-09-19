@@ -365,10 +365,10 @@ td:hover {
 }
 .exampleCir{
     position: absolute;
-    width: 3vh;
-    height: 3vh;
+    width: 6vh;
+    height: 6vh;
     border-radius: 3vh;
     left: 20%;
-    bottom:15%;
+    bottom:6%;
     background-color: hsl(214, 64%, 72%);
 }

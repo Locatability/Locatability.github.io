@@ -203,15 +203,40 @@ function createGriddedStimulus(container)
         rect.isTarget = "true";
         //rotate target
         element.style.transform = `rotate(${Feature.targetAngle}deg)`;
-        if (Feature.targetShape == 'circle'){
-          element.style.left = `${x -targetWidth/2}in`;
-          element.style.top = `${y -targetWidth/2 + targetWidth/2}in`;
-          element.style.borderRadius = `${targetWidth}in`;
+        if (Feature.targetShape === 'circle'){
+          var theRadius = ElementWidth;
+          element.style.height = `${2*theRadius}in`;
+          element.style.width = `${2*theRadius}in`;
+          element.style.left = `${x - theRadius+ theRadius/Math.sqrt(5)}in`;
+          element.style.top = `${y - theRadius+ theRadius/Math.sqrt(5)}in`;
+          element.style.borderRadius = `${theRadius}in`;
         }
         // adjust target for length
         if (Feature.activeFeature === 'Length'){
           element.style.width = `${elementWidth}in`;
           element.style.height = `${elementHeight}in`;
+        }
+        if(Feature.activeFeature === "Shape"){
+          var crosselementWidth = Math.sqrt((Math.PI * Math.pow(ElementWidth,2))/5);
+          var crosselementHeight = 3*crosselementWidth;
+          element.style.left = `${x+ElementWidth - crosselementWidth/2}in`;//ElementWidth is the circle radius
+          element.style.top = `${y+ElementWidth - crosselementHeight/2}in`;
+          element.style.width = `${crosselementWidth}in`;
+          element.style.height = `${crosselementHeight}in`;
+          element.style.transform = `rotate(45deg)`;
+
+          const target2 = document.createElement('div');
+          target2.classList.add("cross");
+          target2.style.position = "absolute";
+          target2.style.left =`${x+ElementWidth - crosselementWidth/2}in`;
+          target2.style.top = `${y+ElementWidth - crosselementHeight/2}in`;
+          target2.style.width = `${crosselementWidth}in`;
+          target2.style.height = `${crosselementHeight}in`;
+
+          target2.style.backgroundColor = Feature.targetColor;
+          //rotate target
+          target2.style.transform = `rotate(315deg)`;
+          container.appendChild(target2);
         }
         element.addEventListener("click", function() {
           const textElement = document.getElementById("correct-message-window");
@@ -232,10 +257,15 @@ function createGriddedStimulus(container)
         element.style.height = `${elementHeight}in`;
         element.style.transform = `rotate(${Feature.distractorAngle}deg)`;
         if (Feature.distractorShape == 'circle'){
-          element.style.height = `${elementWidth}in`;
-          element.style.left = `${x -elementWidth/2}in`;
-          element.style.top = `${y -elementWidth/2 +targetWidth/2}in`;
-          element.style.borderRadius = `${elementWidth}in`;
+          var theRadius = ElementWidth/Math.sqrt(5);
+          if (Feature.activeFeature === 'Shape'){
+            theRadius = ElementWidth;
+          }
+          element.style.height = `${2*theRadius}in`;
+          element.style.width = `${2*theRadius}in`;
+          element.style.left = `${x}in`;
+          element.style.top = `${y }in`;
+          element.style.borderRadius = `${theRadius}in`;
         }
         // adjust target for length
         if (Feature.activeFeature === 'Length'){
@@ -282,10 +312,16 @@ function createRandomTarget(container)
   var targetWidth = ElementWidth;
   var targetHeight = ElementWidth*defaultHeightWidthRatio;
   if (Feature.activeFeature === 'Size'){
-      var targetsize = calculateTargetSize();
-      targetWidth = targetsize[0];
-      targetHeight = targetsize[0];
+      //var targetsize = calculateTargetSize();
+      //targetWidth = targetsize[0];
+      targetHeight = targetWidth;
   }
+  if (Feature.activeFeature === 'Shape'){
+    //var targetsize = calculateTargetSize();
+    //targetWidth = targetsize[0];
+    targetWidth = Math.sqrt((Math.PI * Math.pow(ElementWidth,2))/5);
+    targetHeight = 3*targetWidth;
+}
   while(count <= Factor.targetNumber)
   {
     const x = Math.random() * (STIMULUSCONTAINERWIDTH - targetWidth);
@@ -304,10 +340,19 @@ function createRandomTarget(container)
         target.style.width = `${targetWidth}in`;
         target.style.height = `${targetHeight}in`;
         target.style.backgroundColor = Feature.targetColor;
+        if (Feature.targetShape === 'circle'){
+          var theRadius = ElementWidth;
+          target.style.height = `${2*theRadius}in`;
+          target.style.width = `${2*theRadius}in`;
+          target.style.left = `${x -theRadius}in`;
+          target.style.top = `${y -theRadius}in`;
+          target.style.borderRadius = `${theRadius}in`;
+        }
         //rotate target
         target.style.transform = `rotate(${Feature.targetAngle}deg)`;
       }
       else{
+
         target.classList.add("rectangle");
         target.style.position = "absolute";
         target.style.left = `${rect.x}in`;
@@ -483,6 +528,15 @@ function createRandomElements(container)
       elementHeight = ElementWidth * SQUARE_RECTWIDTH_RATIO;
       elementWidth = elementHeight;
     }
+  if (Feature.distractorShape === 'circle'){
+    var theRadius = ElementWidth/Math.sqrt(5);
+    if (Feature.activeFeature === 'Shape'){
+      theRadius = ElementWidth;
+    }
+    elementWidth = 2*theRadius;
+    elementHeight = 2*theRadius;
+  }
+
   var count = 1;
   var numOutofTarget = Factor.elementNumber- Factor.targetNumber;
   while (count <= numOutofTarget) {
@@ -501,8 +555,16 @@ function createRandomElements(container)
           element.style.width = `${elementWidth}in`;
           element.style.height = `${elementHeight}in`;
           //shape determine
-          if (Feature.distractorShape == 'circle')
+          if (Feature.distractorShape === 'circle'){
+
+            
+            element.style.height = `${elementWidth}in`;
+            element.style.width = `${elementHeight}in`;
+            element.style.left = `${x -elementWidth/2}in`;
+            element.style.top = `${y -elementWidth/2}in`;
             element.style.borderRadius = `${elementWidth/2}in`;
+          }
+            
           element.style.backgroundColor  = Feature.distractorColor;
           //rotate element
           element.style.transform = `rotate(${Feature.distractorAngle}deg)`;
