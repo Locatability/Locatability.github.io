@@ -10,101 +10,165 @@
 
 
 <body>
-    <div id="locatability">
+  <div id="locatability" style = "height: 15vh;">
       <b  id = "title">Locatability</b>
-      <b   style ="  position: absolute;
+      <b  style ="  position: absolute;
       width: 20vw;
-      top:10%;
+      top:8%;
       left: 2%;
-      font-size: 1vw;
+      font-size: 1.5vw;
       font-family: Arial, sans-serif;
       color: #858585;">Choosing Visual Variables to Support Visual Location</b>
-    </div>
-    <div id = "featureBanner">
+  </div>
+  <div id = "featureBanner">
       <!-- <input type="search" id="target location" value = "set size"  onkeydown="OnKeyDown(event)"> -->
       <div class = "feature-container" style ="left: 0%;">
         <input type="checkbox" id="Luminance" value = "Luminance" checked  onclick="toggleFeatures(this)">
-
         <label class = "feature-text">Luminance</label>
-
+        <div class="exampleRect" style ="background-color: white"></div>
+        <div class="exampleRect" style ="background-color: black; left: 75%;"></div>
       </div>
-
       <div class = "feature-container" style ="left: 14%;">
-        <input type="checkbox" id="Hue" value = "Hue" checked  onclick="toggleFeatures(this)">
-        <label class = "feature-text" >Hue</label>
-      </div>
-      <div class = "feature-container" style ="left: 28%;">
         <input type="checkbox" id="D3Color" value = "D3Color" checked  onclick="toggleFeatures(this)">
         <label class = "feature-text" >D3Color</label>
+        <div class="exampleRect" style ="background-color: #08519c"></div>
+        <div class="exampleRect" style ="background-color: #bdd7e7; left: 75%;"></div>
       </div>
+      <div class = "feature-container" style ="left: 28%;">
+        <input type="checkbox" id="Hue" value = "Hue" checked  onclick="toggleFeatures(this)">
+        <label class = "feature-text" >Hue</label>
+        <div class="exampleRect" style ="background-color: #ee9590"></div>
+        <div class="exampleRect" style ="background-color: #87b0e5; left: 75%;"></div>
+      </div>
+
       <div class = "feature-container" style ="left: 42%;">
         <input type="checkbox" id="Size" value = "Size" checked  onclick="toggleFeatures(this)">
         <label class = "feature-text" >Size</label>
+        <div class="exampleCir" ></div>
+        <div class="exampleCir" style =" left: 75%;border-radius:1.34vh; width: 1.34vh; height: 1.34vh;"></div>
       </div>
       <div class = "feature-container" style ="left: 56%;"> 
-        <input type="checkbox" id="Length" value = "Length" checked  onclick="toggleFeatures(this)">
-        <label class = "feature-text" >Length</label>
-      </div>
-      <div class = "feature-container" style ="left: 72%;">  
         <input type="checkbox" id="Orientation" value = "Orientation" checked  onclick="toggleFeatures(this)">
         <label class = "feature-text" >Orientation</label>
+        <div class="exampleRect" style =" transform: rotate(45deg);"></div>
+        <div class="exampleRect" style =" left: 75%;"></div>
+      </div>
+      <div class = "feature-container" style ="left: 72%;">  
+        <input type="checkbox" id="Length" value = "Length" checked  onclick="toggleFeatures(this)">
+        <label class = "feature-text" >Length</label>
+        <div class="exampleRect" ></div>
+        <div class="exampleRect" style =" left: 75%; height: 4vh;"></div>
+
       </div>
       <div class = "feature-container" style ="left: 86%;">
         <input type="checkbox" id="Shape" value = "Shape" checked  onclick="toggleFeatures(this)">
         <label class = "feature-text" >Shape</label>
+        <div class="exampleRect"  style ="width: 2.38vh; height: 7.13vh;  transform: rotate(45deg);"></div>
+        <div class="exampleRect"  style ="width: 2.38vh; height: 7.13vh;  transform: rotate(-45deg);"></div>
+        <div class="exampleCir" style =" left: 75%;"></div>
       </div>
-    </div>
+  </div>
 
-    <div id="inputField">
-      <div id = "layouts" class = "factor-container" style ="background-color: #fbb4ae;">
-        <input type="radio" id="gridded" data-clicked="false" value = "gridded"  onclick="toggleLayouts(this)">
-        <label class = "factor-text"> Grid Layouts </label><br>
+  <div id="inputField">
+      <div id = "layouts" class = "factor-container" style ="background-color: #fff;">
+        <b class ="factor-des">Pick a layout for your design:</b><br>
+        <input type="radio" style ="margin-top: 5%;" id="gridded" data-clicked="false" value = "gridded"  onclick="toggleLayouts(this)">
+        <label class = "factor-text"> Grid Layouts </label>
         <input type="radio" id="nongridded" data-clicked="true" value = "nongridded"  onclick="toggleLayouts(this)">
         <label class = "factor-text" > Non-Grid Layouts </label>
       </div>
 
-      <div id = "setsizes" class = "factor-container" style ="background-color: #b3cde3;">
-        <label class = "factor-text"> Set Size (The number of total objects) </label><br>
+      <div id = "setsizes" class = "factor-container" style ="background-color: #fff;">
+        <b  class ="factor-des"> Set Size (Number of total objects) </b><br>
         <!-- <input id="setsize" value = "set size" placeholder="12"  min="12" max="768" type = "number" ></input> -->
-        <input type="range" id="SetSizeslider" min="12" max="768" step="1" value="12">
-        <input type="number" id="SetSizeNum" min="12" max="768" step="1" value="12">
+        <input type="range" style ="margin-top: 5%;" id="SetSizeslider" min="12" max="768" step="1" value="12">
+        <input type="number"  id="SetSizeNum" min="12" max="768" step="1" value="12">
       </div>
 
-      <div id = "location" class = "factor-container" style ="background-color: #fed9a6;">
-        <label class = "factor-text"> Target Location  </label><br>
-        <input id="targetlocation"  placeholder="0" type = "number" ></input>
+      <div id = "tarLocation" class = "factor-container" style ="background-color: #fff;">
+        <b  class ="factor-des"> Target Location </b><br>
+        <!-- <input id="setsize" value = "set size" placeholder="12"  min="12" max="768" type = "number" ></input> -->
+        <input type="range" style ="margin-top: 5%;" id="TarLocslider" min="0" max="1" step="0.01" value="0.5">
+        <input type="number"  id="TarLocNum" min="0" max="1" step="0.01" value="0.5">
       </div>
-    </div>
-<div id="output">
-  <h1 >we recommend you to use </h1>
-  <label id="visualVariable" >Luminance </label>
-  <h1>which will take approximately </h1>
-  <label id="taskTime" >631 milliseconds</label>
-  <h1 > to find the target  </h1>
-  
-</div>
-  <div id="stimulus-container" style ="background-color: #808080;">
   </div>
+
+  <div style ="width: 25vw; background-color: #d0d1e6; border-bottom: 1px solid #000;">
+    <b style ="  position: relative; left: 2%;">Based on your settings, we recommend utilizing</b>
+    <b id = "visualVariable"  style ="  position: relative;
+    left: 2%;
+    font-size: 1.5vw;
+    font-family: Arial, sans-serif;
+    background-color: #f39c12;
+    color: #000;">Luminance </b><br>
+    <b  style ="  position: relative; left: 2%;">which will take approximately</b>
+    <b id = "taskTime"   style ="  position: relative;
+    left: 2%;
+    font-size: 1.5vw;
+    font-family: Arial, sans-serif;
+    background-color: #f39c12;
+    color: #000;">631</b>
+    <b  style ="  position: relative; left: 2%;"> milliseconds to find the target.  </b>
+  </div>
+  <div id="output-container" style ="position: relative; top: 0; width: 25vw; background-color: #d0d1e6">
+    <!-- <label >we recommend you to use </label><br>
+    <label id="visualVariable" >Luminance </label>
+    <label>which will take approximately </label><br>
+    <label id="taskTime" >631 milliseconds</label>
+    <label> to find the target.  </label><br>
+    <label>The the rest variables will take: </label><br>
+    <label id="orderInfo" >The the rest variables will take: </label> -->
+    
+  </div>
+
+  <div id="stimulus-container" style ="background-color: #808080;"></div>
+
+  <div id="correct-message-window" class="modal">
+    <div class="modal-content">
+      <!-- <span class="close"  onclick="closeModal('correct-message-window')">&times;</span> -->
+      <h2>BINGO</h2>
+      <p>You found the target!</p>
+    </div>
+  </div>
+  <!-- Info window which provide infomation about the model -->
+  <!-- <div id="info-window" class="modal">
+    <div class="modal-content">
+      <span class="close"  onclick="closeModal('info-window')">&times;</span>
+      <h2>BINGO</h2>
+      <p>You found the target!</p>
+    </div>
+  </div> -->
 </body>
 <script>
   document.getElementById('nongridded').checked = true;
   //document.getElementById('setsize').addEventListener('input', updateSetSize);
   document.addEventListener('DOMContentLoaded', () => {
-    const slider = document.getElementById('SetSizeslider');
-    const numberInput = document.getElementById('SetSizeNum');
-
+    const SSslider = document.getElementById('SetSizeslider');
+    const SSnumberInput = document.getElementById('SetSizeNum');
+    const TLslider = document.getElementById('TarLocslider'); // target location slider
+    const TLnumberInput = document.getElementById('TarLocNum');
     // Update number input when slider value changes
-    slider.addEventListener('input', () => {
-      numberInput.value = slider.value;
-      updateSetSize(slider.value);
+    SSslider.addEventListener('input', () => {
+      SSnumberInput.value = SSslider.value;
+      updateSetSize(SSslider.value);
     });
 
     // Update slider when number input value changes
-    numberInput.addEventListener('input', () => {
-      slider.value = numberInput.value;
-      updateSetSize(numberInput.value);
+    SSnumberInput.addEventListener('input', () => {
+      SSslider.value = SSnumberInput.value;
+      updateSetSize(SSnumberInput.value);
     });
-    
+
+    TLslider.addEventListener('input', () => {
+      TLnumberInput.value = TLslider.value;
+      //updateSetSize(TLslider.value);
+    });
+
+    // Update slider when number input value changes
+    TLnumberInput.addEventListener('input', () => {
+      TLslider.value = TLnumberInput.value;
+      //updateSetSize(TLnumberInput.value);
+    });
 });
   var Feature ={
   targetShape: "rectangle",
@@ -122,19 +186,20 @@
   activeFeature: "Hue"
 }
 
-// The data structure that store all necessary factor info for an experiment
-var Factor ={
-  targetNumber: 1,
-  elementNumber: 12,
-  targetLocation: {}, //Has 4 variables - left, right, top, middle 
-  orientation: 0,
-  spatialPattern: null, //string: "Gridded", "Randomized"
-  proximity : null,  // type: float
-  activeFactor: "None",
-  row: 0,
-  col: 0
-}
-
-generateStimulus(Feature,Factor); 
+  // The data structure that store all necessary factor info for an experiment
+  var Factor ={
+    targetNumber: 1,
+    elementNumber: 12,
+    targetLocation: {}, //Has 4 variables - left, right, top, middle 
+    orientation: 0,
+    spatialPattern: null, //string: "Gridded", "Randomized"
+    proximity : null,  // type: float
+    activeFactor: "None",
+    row: 0,
+    col: 0
+  }
+  calcuLocatability();
+  // generateStimulus(Feature,Factor); 
+  // createTable(["Luminance"],[629]);
 </script>
 </html>

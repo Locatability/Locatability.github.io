@@ -2,7 +2,7 @@
 const defaultShape = 'rectangle';
 const DEFAULTELEMENTCOLOR = '#87b0e5';
 const defaultTargetColor = '#ee9590';
-const defaultHeightWidthRatio = 2.5;
+const defaultHeightWidthRatio = 10/3;
 const defaultOrientation = 'rectangle'; 
 const defaultCurvature = false;
 const defaultClosure = false;
@@ -11,7 +11,8 @@ const defaultTerminator = false;
 const ShapeEnum = {
     Rectangle: 'Rectangle',
     Circle: 'Circle',
-    Square: 'Square'
+    Square: 'Square',
+    Cross: 'Cross'
   };
 
 //Macro const for the stimulus container
@@ -26,6 +27,7 @@ const DEGREE_FOCUS_LONG = 8; // The subtended degree of the focus area;
 const DEGREE_FOCUS_SHORT = 8;// 
 
 const SQUARE_RECTWIDTH_RATIO = 1.75;
+const LENGTH_STIMULI_RATIO = 4/3;
 
 // The data structure that store all necessary feature info for an experiment
 var Feature ={
@@ -152,37 +154,29 @@ function defineFactor(object)
   
   if (Factor.spatialPattern === "Gridded"&& Factor.row * Factor.col != Factor.elementNumber)
   {
-    // if user selected gridded by input the wrong row and/or col number,
-    // Show a message and set spatial pattern back to random
-
-    /**
-     * To D0: Show error message
-     */
-    const errorWindow = document.getElementById("error-window");
-    errorM = document.getElementById("errorMessage");
-    errorM.innerHTML = "The product of row and col is not the set size. The layout will keep being random."
-    errorWindow.style.display = 'block';
-    Factor.spatialPattern = "Randomized";
-    Factor.row = 0;
-    Factor.col = 0;
+      Factor.col = Math.round(Math.sqrt(Factor.elementNumber));
+      Factor.row = Factor.col+1;
+    // const errorWindow = document.getElementById("error-window");
+    // errorM = document.getElementById("errorMessage");
+    // errorM.innerHTML = "The product of row and col is not the set size. The layout will keep being random."
+    // errorWindow.style.display = 'block';
+    // Factor.spatialPattern = "Randomized";
+    // Factor.row = 0;
   }
 }
 
-function createGriddedStimulus(container,rowNum,colNum)
+function createGriddedStimulus(container)
 { 
   var elementHeight = ElementWidth;
   var elementWidth = ElementWidth; 
   var targetsize = calculateTargetSize();
   var targetWidth = targetsize[0];
   var targetHeight = targetsize[0];
-  if(Feature.distractorShape == "rectangle")
+  var rowNum = Factor.row;
+  var colNum = Factor.col;
+  //if(Feature.distractorShape == "rectangle")
     elementHeight = elementWidth * defaultHeightWidthRatio;
-  if(Feature.distractorShape == 'square')
-    {
-      elementHeight = elementWidth * SQUARE_RECTWIDTH_RATIO;
-      elementWidth = elementHeight;
-    }
-  if(Feature.targetShape == "rectangle")
+  //if(Feature.targetShape == "rectangle")
     targetHeight = targetsize[1]; 
   var elementPaddingH = (STIMULUSCONTAINERWIDTH - colNum*elementWidth);
   elementPaddingH = elementPaddingH/(+colNum +1)
@@ -190,7 +184,7 @@ function createGriddedStimulus(container,rowNum,colNum)
 
   var targetPos = parseInt(Math.random() * (Factor.elementNumber));
   var count = 1;
-  for (let i = 0; i < rowNum; i++) 
+  for (let i = 0; i < rowNum; i++) {
     for(let j = 0; j < colNum; j++) {
       const element = document.createElement("div");
       
@@ -209,18 +203,25 @@ function createGriddedStimulus(container,rowNum,colNum)
         rect.isTarget = "true";
         //rotate target
         element.style.transform = `rotate(${Feature.targetAngle}deg)`;
-        if (Feature.targetShape == 'circle')
+        if (Feature.targetShape == 'circle'){
+          element.style.left = `${x -targetWidth/2}in`;
+          element.style.top = `${y -targetWidth/2 + targetWidth/2}in`;
           element.style.borderRadius = `${targetWidth}in`;
-          element.addEventListener("click", function() {
+        }
+        // adjust target for length
+        if (Feature.activeFeature === 'Length'){
+          element.style.width = `${elementWidth}in`;
+          element.style.height = `${elementHeight}in`;
+        }
+        element.addEventListener("click", function() {
           const textElement = document.getElementById("correct-message-window");
-  
+
           textElement.style.display = 'block';
-  
+
           // Set a timeout to hide the text element after 3 second
           setTimeout(function() {
             textElement.style.display = 'none'; // or textElement.style.opacity = "0";
           }, 1500);
-  
         });
       }
       else
@@ -230,14 +231,28 @@ function createGriddedStimulus(container,rowNum,colNum)
         element.style.width = `${elementWidth}in`;
         element.style.height = `${elementHeight}in`;
         element.style.transform = `rotate(${Feature.distractorAngle}deg)`;
-        if (Feature.distractorShape == 'circle')
+        if (Feature.distractorShape == 'circle'){
+          element.style.height = `${elementWidth}in`;
+          element.style.left = `${x -elementWidth/2}in`;
+          element.style.top = `${y -elementWidth/2 +targetWidth/2}in`;
           element.style.borderRadius = `${elementWidth}in`;
+        }
+        // adjust target for length
+        if (Feature.activeFeature === 'Length'){
+          element.style.width = `${targetWidth}in`;
+          element.style.height = `${targetHeight}in`;
+          element.style.top = `${y  + targetWidth*2}in`;
+        }
+          
       }
       ElementArray.push(element);
       ElementsRect.push(rect);
       count++;
       //elements.push({ x, y });
       container.appendChild(element);
+      if(count > Factor.elementNumber)break;
+    }
+    if(count > Factor.elementNumber)break;
   }
 }
 
@@ -261,11 +276,16 @@ function createRandomTarget(container)
 {
   console.log("target shape: "+ Feature.targetShape);
   var count = 1;
-  var targetsize = calculateTargetSize();
-  var targetWidth = targetsize[0];
-  var targetHeight = targetsize[0];
-  if (Feature.targetShape == 'rectangle')
-     targetHeight = targetsize[1];
+  // var targetsize = calculateTargetSize();
+  // var targetWidth = targetsize[0];
+  // var targetHeight = targetsize[0];
+  var targetWidth = ElementWidth;
+  var targetHeight = ElementWidth*defaultHeightWidthRatio;
+  if (Feature.activeFeature === 'Size'){
+      var targetsize = calculateTargetSize();
+      targetWidth = targetsize[0];
+      targetHeight = targetsize[0];
+  }
   while(count <= Factor.targetNumber)
   {
     const x = Math.random() * (STIMULUSCONTAINERWIDTH - targetWidth);
@@ -274,12 +294,44 @@ function createRandomTarget(container)
     if (!checkCollision(rect, ElementsRect) && checkLocation(rect))
     {    
       const target = document.createElement('div');
-      target.classList.add(Feature.targetShape);
-      target.style.position = "absolute";
-      target.style.left = `${rect.x}in`;
-      target.style.top = `${rect.y}in`;
-      target.style.width = `${targetWidth}in`;
-      target.style.height = `${targetHeight}in`;
+      // Temperory code, only for the model 
+      if (Feature.targetShape !== 'cross'){
+        
+        target.classList.add(Feature.targetShape);
+        target.style.position = "absolute";
+        target.style.left = `${rect.x}in`;
+        target.style.top = `${rect.y}in`;
+        target.style.width = `${targetWidth}in`;
+        target.style.height = `${targetHeight}in`;
+        target.style.backgroundColor = Feature.targetColor;
+        //rotate target
+        target.style.transform = `rotate(${Feature.targetAngle}deg)`;
+      }
+      else{
+        target.classList.add("rectangle");
+        target.style.position = "absolute";
+        target.style.left = `${rect.x}in`;
+        target.style.top = `${rect.y}in`;
+        target.style.width = `${targetWidth}in`;
+        target.style.height = `${targetHeight}in`;
+
+        target.style.backgroundColor = Feature.targetColor;
+        //rotate target
+        target.style.transform = `rotate(45deg)`;
+
+        const target2 = document.createElement('div');
+        target2.classList.add("rectangle");
+        target2.style.position = "absolute";
+        target2.style.left = `${rect.x}in`;
+        target2.style.top = `${rect.y}in`;
+        target2.style.width = `${targetWidth}in`;
+        target2.style.height = `${targetHeight}in`;
+
+        target2.style.backgroundColor = Feature.targetColor;
+        //rotate target
+        target2.style.transform = `rotate(315deg)`;
+        container.appendChild(target2);
+      }
       target.addEventListener("click", function() {
         const textElement = document.getElementById("correct-message-window");
 
@@ -291,23 +343,18 @@ function createRandomTarget(container)
         }, 1500);
 
       });
-      //shape determine
-      // if (Feature.targetShape == 'circle')
-      //   target.style.borderRadius = `${targetWidth}in`;
-      target.style.backgroundColor = Feature.targetColor;
-      //rotate target
-      target.style.transform = `rotate(${Feature.targetAngle}deg)`;
+      
       ElementArray.push(target);
       container.appendChild(target);
+      
       ElementsRect.push(rect);
       count++;
-      
       //comment following lines can make the proximity circle disappered
-      if(Factor.proximity>0)
-      {
-        var centerR = Factor.proximity*DPI;
-        drawCircle(target,centerR,container);
-      }
+      // if(Factor.proximity>0)
+      // {
+      //   var centerR = Factor.proximity*DPI;
+      //   drawCircle(target,centerR,container);
+      // }
     }
   }
 }
@@ -421,11 +468,17 @@ function createRandomElements(container)
 {
   console.log("element shape: "+ Feature.distractorShape);
   const targetRect = ElementsRect[0];
+
   var elementHeight = ElementWidth;
   var elementWidth = ElementWidth;
-  if(Feature.distractorShape == 'rectangle')
+
+  if(Feature.distractorShape === 'rectangle'){
     elementHeight = ElementWidth * defaultHeightWidthRatio;
-  if(Feature.distractorShape == 'square')
+    if (Feature.activeFeature === 'Length')
+      elementHeight = ElementWidth * LENGTH_STIMULI_RATIO;
+  }
+    
+  if(Feature.distractorShape === 'square')
     {
       elementHeight = ElementWidth * SQUARE_RECTWIDTH_RATIO;
       elementWidth = elementHeight;
@@ -444,6 +497,7 @@ function createRandomElements(container)
           element.style.position = "absolute";
           element.style.left = `${rect.x}in`;
           element.style.top = `${rect.y}in`;
+          
           element.style.width = `${elementWidth}in`;
           element.style.height = `${elementHeight}in`;
           //shape determine
@@ -609,14 +663,7 @@ function generateStimulus(featureData, factorData) {
     
     if(Factor.spatialPattern == "Gridded")
       {
-        rowNum = Factor.row;
-        colNum = Factor.col;
-        if(Factor.row <=0 ||Factor.col <=0)
-          {
-            rowNum = Math.round(Math.sqrt(Factor.elementNumber));
-            colNum = rowNum;
-          }
-        createGriddedStimulus(stimulusContainer,rowNum,colNum);
+        createGriddedStimulus(stimulusContainer);
       }
     else
       {

@@ -25,20 +25,21 @@ html, body {
     border-radius: 20px;
 }
 
+
 .shape-rectangle {
     display: inline-block;
-    width: 16px;
+    width: 12px;
     height: 40px;
     text-align: center;
     margin-right: 50px;
     background-color: hsl(221, 34%, 50%);
 }
-    /*.shape-rectangle:hover {
-        background-color: #f768a1;
-    }*/
-    .shape-rectangle:active {
-        background-color: #f64932;
-    }
+/*.shape-rectangle:hover {
+    background-color: #f768a1;
+}*/
+.shape-rectangle:active {
+    background-color: #f64932;
+}
 
 .shape-circle {
     display: inline-block;
@@ -151,8 +152,9 @@ background-color: yellow;
     background-color: white;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    border: 1px solid #000;
+    width: 50%;
+    height: 50%;
 }
 
 .close {
@@ -202,6 +204,8 @@ background-color: yellow;
     margin: 0px 0px;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
     text-align: left;
     z-index: 10;
   }
@@ -210,9 +214,21 @@ background-color: yellow;
     width: 20vw;
     top: 5%;
     left: 2%;
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     font-family: Arial, sans-serif;
     color: #858585;
+  }
+
+  /* factor description */
+  .factor-des { 
+    position: relative;
+    width: 20vw;
+    top: 5%;
+    left: 2%;
+    font-size: 1.2vw;
+    font-family: Arial, sans-serif;
+    color: #858585;
+    margin-left: 1%;
   }
 .feature-container {
     position: absolute;
@@ -232,7 +248,8 @@ background-color: yellow;
     left: 25vw;
     top:0%;
     margin: 0px 0px;
-    background-color: #808080; 
+    background-color: #808080;
+    border-bottom: 1px solid #000; 
     justify-content: center;
     align-items: center;
     text-align: left;
@@ -250,7 +267,7 @@ background-color: yellow;
 
 
   input[type="checkbox"]:checked {
-    background: blue;
+    background: #525252;
     color: white;
   }
   
@@ -260,7 +277,7 @@ background-color: yellow;
     -moz-appearance: none;
     appearance: none;
     outline: 0;
-    background: lightgray;
+    background: #f7f7f7;
     height: 16px;
     width: 16px;
     border: 1px solid white;
@@ -300,3 +317,58 @@ background-color: yellow;
     width: 15%;
     left:85%;
   }
+
+
+  /* body {
+    font-family: Arial, sans-serif;
+} */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* margin: 1vw auto; */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Highlighting the first row */
+th {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text color */
+    font-weight: bold; /* Bold text */
+}
+/* Highlighting the second row */
+tr:nth-child(2) td {
+  background-color: #f39c12; /* Orange background for second row */
+  font-weight: bold; /* Bold text */
+}
+/* Adding background color to table cells */
+td {
+    background-color: #f9f9f9; /* Light gray for data cells */
+}
+
+td:hover {
+    background-color: #f1f1f1; /* Change color on hover */
+}
+
+.exampleRect{
+    position: absolute;
+    width: 3vh;
+    height: 10vh;
+    left: 25%;
+    bottom:1%;
+    background-color: hsl(214, 64%, 72%);
+}
+.exampleCir{
+    position: absolute;
+    width: 3vh;
+    height: 3vh;
+    border-radius: 3vh;
+    left: 20%;
+    bottom:15%;
+    background-color: hsl(214, 64%, 72%);
+}
