@@ -50,7 +50,7 @@ var Feature ={
 var Factor ={
   targetNumber: 1,
   elementNumber: 36,
-  targetLocation: {}, //Has 4 variables - left, right, top, middle 
+  targetLocation: {}, //Has 3 variables - x, y, dis 
   orientation: 0,
   spatialPattern: null, //string: "Gridded", "Randomized"
   proximity : null,  // type: float
@@ -109,43 +109,48 @@ function defineFactor(object)
       The following four variables are used to restrict the position of targets,
       based on user input. The default value is equal to the container size.
     */
-  Factor.targetLocation.left = 0;
-  Factor.targetLocation.right = STIMULUSCONTAINERWIDTH;
-  Factor.targetLocation.top = 0;
-  Factor.targetLocation.bottom = STIMULUSCONTAINERHEIGHT;
-  switch(object.targetLocationX) {
-    case -1: //left
-      Factor.targetLocation.left  = 0;
-      Factor.targetLocation.right = STIMULUSCONTAINERWIDTH/3;
-      break;
-    case 0: //middle
-      Factor.targetLocation.left  = STIMULUSCONTAINERWIDTH/3;
-      Factor.targetLocation.right = 2*STIMULUSCONTAINERWIDTH/3;
-      break;
-    case 1: //right
-      Factor.targetLocation.left = 2*STIMULUSCONTAINERWIDTH/3;
-      Factor.targetLocation.right = STIMULUSCONTAINERWIDTH;
-      break;
-    default:
-      break;
-  }
 
-  switch(object.targetLocationY) {
-    case -1: //top
-      Factor.targetLocation.top = 0;
-      Factor.targetLocation.bottom = STIMULUSCONTAINERHEIGHT/3;
-      break;
-    case 0: //middle
-      Factor.targetLocation.top  = STIMULUSCONTAINERHEIGHT/3;
-      Factor.targetLocation.bottom = 2*STIMULUSCONTAINERHEIGHT/3;
-      break;
-    case 1: //bottom
-      Factor.targetLocation.bottom = STIMULUSCONTAINERHEIGHT;
-      Factor.targetLocation.top = 2*STIMULUSCONTAINERHEIGHT/3;
-      break;
-    default:
-      break;
-  }
+
+  Factor.targetLocation = object.targetLocation;
+  // the following are old code
+    // Factor.targetLocation.left = 0;
+    // Factor.targetLocation.right = STIMULUSCONTAINERWIDTH;
+    // Factor.targetLocation.top = 0;
+    // Factor.targetLocation.bottom = STIMULUSCONTAINERHEIGHT;
+    // switch(object.targetLocationX) {
+    //   case -1: //left
+    //     Factor.targetLocation.left  = 0;
+    //     Factor.targetLocation.right = STIMULUSCONTAINERWIDTH/3;
+    //     break;
+    //   case 0: //middle
+    //     Factor.targetLocation.left  = STIMULUSCONTAINERWIDTH/3;
+    //     Factor.targetLocation.right = 2*STIMULUSCONTAINERWIDTH/3;
+    //     break;
+    //   case 1: //right
+    //     Factor.targetLocation.left = 2*STIMULUSCONTAINERWIDTH/3;
+    //     Factor.targetLocation.right = STIMULUSCONTAINERWIDTH;
+    //     break;
+    //   default:
+    //     break;
+    // }
+
+    // switch(object.targetLocationY) {
+    //   case -1: //top
+    //     Factor.targetLocation.top = 0;
+    //     Factor.targetLocation.bottom = STIMULUSCONTAINERHEIGHT/3;
+    //     break;
+    //   case 0: //middle
+    //     Factor.targetLocation.top  = STIMULUSCONTAINERHEIGHT/3;
+    //     Factor.targetLocation.bottom = 2*STIMULUSCONTAINERHEIGHT/3;
+    //     break;
+    //   case 1: //bottom
+    //     Factor.targetLocation.bottom = STIMULUSCONTAINERHEIGHT;
+    //     Factor.targetLocation.top = 2*STIMULUSCONTAINERHEIGHT/3;
+    //     break;
+    //   default:
+    //     break;
+    // }
+  
   Factor.spatialPattern = object.spatialPattern || Factor.spatialPattern;
   Factor.proximity = object.proximity;
   Factor.activeFactor = object.activeFactor;
@@ -184,6 +189,7 @@ function createGriddedStimulus(container)
 
   var targetPos = parseInt(Math.random() * (Factor.elementNumber));
   var count = 1;
+  var targetFlag = false;
   for (let i = 0; i < rowNum; i++) {
     for(let j = 0; j < colNum; j++) {
       const element = document.createElement("div");
@@ -194,8 +200,9 @@ function createGriddedStimulus(container)
       element.style.left = `${x}in`;
       element.style.top = `${y}in`;
       const rect = { x, y, width: targetWidth, height: targetHeight, isTarget: "false"  };
-      if(count == targetPos)
+      if(!targetFlag && Math.abs(Math.sqrt((x-4)*(x-4) + (y-3)*(y-3)) - Factor.targetLocation.dis)<0.5)
       {
+        targetFlag = true;
         element.classList.add(Feature.targetShape);
         element.style.backgroundColor  = Feature.targetColor;
         element.style.width = `${targetWidth}in`;
@@ -298,7 +305,6 @@ function calculateTargetSize()
       targetWidth = 2*Math.sqrt((targetWidth*SQUARE_RECTWIDTH_RATIO)**2/Math.PI);
       targetHeight = targetWidth;
     }
-    console.log("radius ", targetWidth)
   return [targetWidth,targetHeight];
 }
 
@@ -324,10 +330,11 @@ function createRandomTarget(container)
 }
   while(count <= Factor.targetNumber)
   {
-    const x = Math.random() * (STIMULUSCONTAINERWIDTH - targetWidth);
-    const y = Math.random() * (STIMULUSCONTAINERHEIGHT - targetHeight);
+    const x = Factor.targetLocation.x;//Math.random() * (STIMULUSCONTAINERWIDTH - targetWidth) + targetWidth;
+    const y = Factor.targetLocation.y;//Math.random() * (STIMULUSCONTAINERHEIGHT - targetHeight)  + targetHeight;
+
     const rect = { x, y, width: targetWidth, height: targetHeight, isTarget: "true"  };
-    if (!checkCollision(rect, ElementsRect) && checkLocation(rect))
+    if (!checkCollision(rect, ElementsRect))// && checkLocation(rect))
     {    
       const target = document.createElement('div');
       // Temperory code, only for the model 
@@ -388,7 +395,6 @@ function createRandomTarget(container)
         }, 1500);
 
       });
-      
       ElementArray.push(target);
       container.appendChild(target);
       
@@ -688,8 +694,6 @@ function generateStimulus(featureData, factorData) {
   
     defineFeature(featureData);
     defineFactor(factorData);
-    //console.log(Feature);
-    
     ElementsRect = [];
     // clear the element array
     ElementArray = [];

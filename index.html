@@ -79,17 +79,17 @@
       </div>
 
       <div id = "setsizes" class = "factor-container" style ="background-color: #fff;">
-        <b  class ="factor-des"> Set Size (Number of total objects) </b><br>
+        <button id="SetSizeBtn" class = "factor-btn" onclick="clickSetSize(this)">Set Size</button>
         <!-- <input id="setsize" value = "set size" placeholder="12"  min="12" max="768" type = "number" ></input> -->
         <input type="range" style ="margin-top: 5%;" id="SetSizeslider" min="12" max="768" step="1" value="12">
         <input type="number"  id="SetSizeNum" min="12" max="768" step="1" value="12">
       </div>
 
-      <div id = "tarLocation" class = "factor-container" style ="background-color: #fff;">
-        <b  class ="factor-des"> Target Location </b><br>
+      <div id = "tarLocation" class = "factor-container" style ="background-color: #f0f0f0;">
+        <button id="TarLocBtn" class = "factor-btn" onclick="clickTarLoc(this)">Target Location</button>
         <!-- <input id="setsize" value = "set size" placeholder="12"  min="12" max="768" type = "number" ></input> -->
-        <input type="range" style ="margin-top: 5%;" id="TarLocslider" min="0" max="1" step="0.01" value="0.5">
-        <input type="number"  id="TarLocNum" min="0" max="1" step="0.01" value="0.5">
+        <input type="range" style ="margin-top: 5%;" id="TarLocslider" min="0" max="0.8" step="0.01" value="0">
+        <input type="number"  id="TarLocNum" min="0" max="0.8" step="0.01" value="0">
       </div>
   </div>
 
@@ -161,13 +161,13 @@
 
     TLslider.addEventListener('input', () => {
       TLnumberInput.value = TLslider.value;
-      //updateSetSize(TLslider.value);
+      updateTarLoc(TLslider.value);
     });
 
     // Update slider when number input value changes
     TLnumberInput.addEventListener('input', () => {
       TLslider.value = TLnumberInput.value;
-      //updateSetSize(TLnumberInput.value);
+      updateTarLoc(TLnumberInput.value);
     });
 });
   var Feature ={

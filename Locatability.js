@@ -39,16 +39,60 @@ const NonGriddedSetSizeIntercept = {
     "Shape":2.820,
 };
 
+const GriddedTarLocSlope = {
+    "Size":0.1144680,
+    "D3Color":0.1032850,
+    "Luminance":0.0478935,
+    "Orientation":0.0478935,
+    "Hue":0.1475980,
+    "Length":0.1230170,
+    "Shape":0.8284310,
+};
+
+const GriddedTarLocIntercept = {
+    "Size":2.85732,
+    "D3Color":2.83214,
+    "Luminance":2.83403,
+    "Orientation":2.87242,
+    "Hue":2.82725,
+    "Length":2.88998,
+    "Shape":2.82883,
+};
+
+const NonGriddedTarLocSlope = {
+    "Size":0.1339710,
+    "D3Color":0.0948123,
+    "Luminance":0.05520,
+    "Orientation":0.2411680,
+    "Hue":0.1552810,
+    "Length":0.4114900,
+    "Shape":1.0051200,
+};
+
+const NonGriddedTarLocIntercept = {
+    "Size":2.80855,
+    "D3Color":2.85941,
+    "Luminance":2.84695,
+    "Orientation":2.83202,
+    "Hue":2.84832,
+    "Length":2.80283,
+    "Shape":2.77721,
+};
+
 const WIHTE = "hsl(0, 0%, 100%)";
 const BLACK = "hsl(0, 0%, 0%)";
 const D3TARGET = "	hsl(210, 90%, 32%)";
 const D3DISTRACTOR = "hsl(203, 47%, 82%)";
 const HUETARGET = "hsl(3, 73%, 75%)";
 const HUEDISTRACTOR = "hsl(214, 64%, 72%)";
+const SS_RANGE = [12,768]; // The range of set size
+const TL_RANGE = [0,0.8]; // The range of distance between target and the display center.
 
-var SetSize = 12;
+var SetSizeValue = 12;
+var TarLocValue = 0.5;
 var IsGridded = false;
 var FeatureAvailable = Features;
+var IsSSActive = true; // whether set size is the active factor?
 
 function hideAllElements(){
     elements = document.querySelectorAll('.circle');
@@ -62,8 +106,64 @@ function hideAllElements(){
     //document.querySelectorAll('.cross').style.display = 'none';
 }
 
+function clickSetSize(){
+    tarLocDiv = document.getElementById('tarLocation');
+    //tarLocBtn = document.getElementById('TarLocBtn');
+    tarLocSlider = document.getElementById('TarLocslider');
+    tarLocInput = document.getElementById('TarLocNum');
+    setSizeDiv = document.getElementById('setsizes');
+    setSizeSlider = document.getElementById('SetSizeslider');
+    setSizeInput = document.getElementById('SetSizeNum');
+    //setSizeBtn = document.getElementById('SetSizeBtn');
+
+    tarLocDiv.style.backgroundColor = '#f0f0f0';
+    //tarLocBtn.style.backgroundColor = 'grey';
+    tarLocSlider.disabled = true;
+    tarLocInput.disabled = true;
+    tarLocInput.readOnly = true;
+    tarLocInput.value = "";
+    setSizeDiv.style.backgroundColor = 'white';
+    //setSizeBtn.style.backgroundColor = 'white';
+    setSizeSlider.disabled = false;
+    setSizeInput.disabled = false;
+    setSizeInput.readOnly = false;
+    setSizeInput.value = SetSizeValue;
+    setSizeSlider.value = TarLocValue;
+}
+
+function clickTarLoc(){
+    tarLocDiv = document.getElementById('tarLocation');
+    //tarLocBtn = document.getElementById('TarLocBtn');
+    tarLocSlider = document.getElementById('TarLocslider');
+    tarLocInput = document.getElementById('TarLocNum');
+    setSizeDiv = document.getElementById('setsizes');
+    setSizeSlider = document.getElementById('SetSizeslider');
+    setSizeInput = document.getElementById('SetSizeNum');
+    //setSizeBtn = document.getElementById('SetSizeBtn');
+
+    tarLocDiv.style.backgroundColor = 'white';
+    //tarLocBtn.style.backgroundColor = 'white';
+    tarLocSlider.disabled = false;
+    tarLocInput.disabled = false;
+    tarLocInput.value = TarLocValue;
+    tarLocSlider.value = TarLocValue;
+    setSizeDiv.style.backgroundColor = '#f0f0f0';
+    //setSizeBtn.style.backgroundColor = 'grey';
+    setSizeSlider.disabled = true;
+    setSizeInput.disabled = true;
+    setSizeInput.value = ""
+    setSizeInput.readOnly = true;
+}
+
 function updateSetSize(value){
-    SetSize = value;
+    SetSizeValue = value;
+    IsSSActive = true;
+    calcuLocatability();
+}
+
+function updateTarLoc(value){
+    TarLocValue = value;
+    IsSSActive = false;
     calcuLocatability();
 }
 
@@ -102,18 +202,37 @@ function toggleLayouts(radioButton)
 
 function calcuLocatability(){
     
-    locatabilities = {};
-    if (IsGridded){
-        theSlopes = GriddedSetSizeSlope;
-        theIntercepts = GriddedSetSizeIntercept;
+    var locatabilities = {};
+    var theSlopes;
+    var theIntercepts;
+    if(IsSSActive){
+        if (IsGridded){
+            theSlopes = GriddedSetSizeSlope;
+            theIntercepts = GriddedSetSizeIntercept;
+        }
+        else{
+            theSlopes = NonGriddedSetSizeSlope;
+            theIntercepts = NonGriddedSetSizeIntercept;
+        }
     }
     else{
-        theSlopes = NonGriddedSetSizeSlope;
-        theIntercepts = NonGriddedSetSizeIntercept;
+        if (IsGridded){
+            theSlopes = GriddedTarLocSlope;;
+            theIntercepts = GriddedTarLocIntercept;
+        }
+        else{
+            theSlopes = NonGriddedTarLocSlope;
+            theIntercepts = NonGriddedTarLocIntercept;
+        }
     }
+
     Features.forEach(element => {
-        logSS = Math.log(SetSize) / Math.LN10;
-        locatabilities[element] =(10**(logSS * theSlopes[element] + theIntercepts[element]));
+        var xValue;
+        if(IsSSActive)
+            xValue = Math.log(SetSizeValue) / Math.LN10;
+        else
+            xValue = TarLocValue;
+        locatabilities[element] =(10**(xValue * theSlopes[element] + theIntercepts[element]));
     });
     const objLocat = Object.entries(locatabilities);
     
@@ -203,15 +322,47 @@ function calcuLocatability(){
             Feature.distractorShape = "circle";
         }
         Feature.activeFeature = theFea;
-
-        Factor.elementNumber = SetSize;
+        if(IsSSActive){
+            Factor.elementNumber = SetSizeValue;
+            TarLocValue = Math.random() * (TL_RANGE[1] - TL_RANGE[0] );
+            Factor.targetLocation = tarLoc2Coor(TarLocValue);
+        }
+        else{
+            
+            Factor.targetLocation = tarLoc2Coor(TarLocValue);
+            SetSizeValue = Math.floor(Math.random() * (SS_RANGE[1] - SS_RANGE[0] + 1)) + SS_RANGE[0];
+            Factor.elementNumber = SetSizeValue;
+        }
+            
         Factor.spatialPattern = IsGridded?"Gridded":"Randomized";
-        
+        console.log(Factor)
         generateStimulus(Feature,Factor); 
     }
     createTable(orderOfVariables,timeOfVariables);
 }
 
+function tarLoc2Coor(dis){ // convert distance between target to center to a coordinate (x,y) 
+    dis = Number(dis);
+    //randomly get a x
+    let theY = -1;
+    let xMin = dis < 2/3 ? 2/3 - dis:0; // the display is normalized by y. I.e. y =1, x =4/3
+    let xMax = dis < 2/3 ? 2/3 + dis:4/3;
+    let theX;
+    let randomFlag;
+    while(theY<0.01 || theY > 0.99)
+    {
+        theX = Math.random()* (xMax - xMin ) + xMin;
+        randomFlag = Math.random() > 0.5 ? true:false;
+        theY = Math.sqrt(dis*dis - (theX - 2/3)*(theX - 2/3));
+        theY = randomFlag ? 1/2 + theY : 1/2 -theY;
+    }
+
+    // the stimulus.js is set in 8*6 coordinate
+    theX*=6;
+    theY*=6;
+    dis*=6;
+    return {x:theX, y:theY, dis:dis};
+}
 
 // Function to create the table
 function createTable(variables, times) {

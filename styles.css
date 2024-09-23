@@ -220,7 +220,7 @@ background-color: yellow;
   }
 
   /* factor description */
-  .factor-des { 
+.factor-des { 
     position: relative;
     width: 20vw;
     top: 5%;
@@ -230,6 +230,23 @@ background-color: yellow;
     color: #858585;
     margin-left: 1%;
   }
+
+.factor-btn{
+    position: relative;
+    width: 10vw;
+    top: 5%;
+    left: 2%;
+    font-size: 1.2vw;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+    margin-left: 1%;
+}
+.factor-btn:hover {
+    background-color: black;
+    color: white;
+}
 .feature-container {
     position: absolute;
     height: 100%;
