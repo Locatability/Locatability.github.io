@@ -153,8 +153,8 @@ background-color: yellow;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #000;
-    width: 50%;
-    height: 50%;
+    width: 30%;
+    height: 10%;
 }
 
 .close {
@@ -202,8 +202,10 @@ background-color: yellow;
     height: 10vh;
     width: 25vw;
     margin: 0px 0px;
+    padding: 5px;
     justify-content: center;
     align-items: center;
+    background-color: #fff;
     border-bottom: 1px solid #000;
     border-right: 1px solid #000;
     text-align: left;
@@ -388,4 +390,64 @@ td:hover {
     left: 20%;
     bottom:6%;
     background-color: hsl(214, 64%, 72%);
+}
+
+
+.help-icon {
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    margin-left: 10px;
+    position: absolute; /* Position relative to the container */
+    top: 3px; /* Distance from the top */
+    right: 3px; /* Distance from the right */
+    display: inline-block;
+    width: 2vw;
+    height: 2vw;
+    background-color: #948f78; /* Grey background */
+    border-radius: 50%; /* Circular shape */
+    text-align: center;
+    line-height: 2vw; /* Center the exclamation mark vertically */
+}
+.popup {
+    display: none; /* Initially hidden */
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+.popup-header {
+    background-color: #cbd5e8; /* Header background color */
+    color: white;
+    align-items: center;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Space between items */
+}
+.header-title {
+    flex-grow: 1; /* Allow title to take available space */
+    text-align: center; /* Center the title text */
+}
+.overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+.close-btn {
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    right: 10px; /* Position close button to the right */
+    top: 10px; /* Position close button at the top */
+    font-size: 18px;
 }

@@ -10,16 +10,41 @@
 
 
 <body>
-  <div id="locatability" style = "height: 15vh;">
-      <b  id = "title">Locatability</b>
+  <div id="locatability" style = "height: 15vh; position: relative;">
+      <b  id = "title" style ="  position: absolute;
+      width: 20vw;
+      top: 5%;
+      left: 3%;">Locatability</b>
+      <span class="help-icon" id="helpIcon">i</span>
       <b  style ="  position: absolute;
       width: 20vw;
-      top:8%;
-      left: 2%;
+      top: 60%;
+      left: 3%;
       font-size: 1.5vw;
       font-family: Arial, sans-serif;
       color: #858585;">Choosing Visual Variables to Support Visual Location</b>
   </div>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="popup" id="popup">
+      <div class="popup-header">
+        <div class="header-title">HOW TO USE</div>
+        <span class="close-btn" id="closeBtn">&times;</span>
+    </div>
+    <div style = "padding:10px">
+      <p>This is a tool that helps you select visual variables for your visualization and UX design. 
+        The tool models the locatability of seven visual variables with respect to three factors - Layout, Set Size, and 
+        Target Location. To use the tool, </p>
+      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">1. Choosing the visual variables that are available for your design by toggling on / off the variables at top.</p>
+      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">2. Choosing a layout for your design.</p>
+      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">3. Choosing a factor from set size and target location and input a value for it. Set size is the number of objects that your design will have. 
+        Target location describes the distance from your target to the center of the display.
+      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">4. Selecting the appropriate visual variable(s) based on our recommendations (Shown in bottom left).</p>
+      </p>
+    </div>
+
+  </div>
+
   <div id = "featureBanner">
       <!-- <input type="search" id="target location" value = "set size"  onkeydown="OnKeyDown(event)"> -->
       <div class = "feature-container" style ="left: 0%;">
@@ -70,30 +95,41 @@
   </div>
 
   <div id="inputField">
-      <div id = "layouts" class = "factor-container" style ="background-color: #fff;">
+      <div id = "layouts" class = "factor-container">
         <b class ="factor-des">Pick a layout for your design:</b><br>
         <input type="radio" style ="margin-top: 5%;" id="gridded" data-clicked="false" value = "gridded"  onclick="toggleLayouts(this)">
-        <label class = "factor-text"> Grid Layouts </label>
+        <label class = "factor-text"  for="gridded"> Grid Layouts </label>
         <input type="radio" id="nongridded" data-clicked="true" value = "nongridded"  onclick="toggleLayouts(this)">
-        <label class = "factor-text" > Non-Grid Layouts </label>
+        <label class = "factor-text"  for="nongridded"> Non-Grid Layouts </label>
       </div>
 
-      <div id = "setsizes" class = "factor-container" style ="background-color: #fff;">
+      <div id = "layouts" class = "factor-container" style = "border-bottom:0; height: 7vh; padding: 5px;">
+        <b class ="factor-des">Pick a factor:</b><br>
+        <input type="radio" style ="margin-top: 5%;" id="setSize" data-clicked="false" value = "Set Size"  onclick="toggleSetSize(this)">
+        <label class = "factor-text"  for="setSize"> Set Size </label>
+        <input type="radio" id="tarLocation" data-clicked="true" value = "Target Location"  onclick="toggleTarLocation(this)">
+        <label class = "factor-text"  for="tarLocation"> Target Location </label>
+      </div>
+
+      <div id = "factorSlider" class = "factor-container" style = "height: 7vh;">
+        <input type="range" style ="margin-top: 5%;" id="theSlider" min="12" max="768" step="1" value="12">
+        <input type="number"  id="theNum" min="12" max="768" step="1" value="12">
+      </div>
+
+      <!-- <div id = "setsizes" class = "factor-container">
         <button id="SetSizeBtn" class = "factor-btn" onclick="clickSetSize(this)">Set Size</button>
-        <!-- <input id="setsize" value = "set size" placeholder="12"  min="12" max="768" type = "number" ></input> -->
         <input type="range" style ="margin-top: 5%;" id="SetSizeslider" min="12" max="768" step="1" value="12">
         <input type="number"  id="SetSizeNum" min="12" max="768" step="1" value="12">
       </div>
 
       <div id = "tarLocation" class = "factor-container" style ="background-color: #f0f0f0;">
         <button id="TarLocBtn" class = "factor-btn" onclick="clickTarLoc(this)">Target Location</button>
-        <!-- <input id="setsize" value = "set size" placeholder="12"  min="12" max="768" type = "number" ></input> -->
         <input type="range" style ="margin-top: 5%;" id="TarLocslider" min="0" max="0.8" step="0.01" value="0">
         <input type="number"  id="TarLocNum" min="0" max="0.8" step="0.01" value="0">
-      </div>
+      </div> -->
   </div>
 
-  <div style ="width: 25vw; background-color: #d0d1e6; border-bottom: 1px solid #000;">
+  <div style ="width: 25vw; background-color: #d0d1e6; border-bottom: 1px solid #000; padding: 5px;">
     <b style ="  position: relative; left: 2%;">Based on your settings, we recommend utilizing</b>
     <b id = "visualVariable"  style ="  position: relative;
     left: 2%;
@@ -110,7 +146,7 @@
     color: #000;">631</b>
     <b  style ="  position: relative; left: 2%;"> milliseconds to find the target.  </b>
   </div>
-  <div id="output-container" style ="position: relative; top: 0; width: 25vw; background-color: #d0d1e6">
+  <div id="output-container" style ="position: relative; top: 0; width: 25vw; background-color: #d0d1e6;">
     <!-- <label >we recommend you to use </label><br>
     <label id="visualVariable" >Luminance </label>
     <label>which will take approximately </label><br>
@@ -141,35 +177,64 @@
 </body>
 <script>
   document.getElementById('nongridded').checked = true;
+  document.getElementById('setSize').checked = true;
   //document.getElementById('setsize').addEventListener('input', updateSetSize);
   document.addEventListener('DOMContentLoaded', () => {
-    const SSslider = document.getElementById('SetSizeslider');
-    const SSnumberInput = document.getElementById('SetSizeNum');
-    const TLslider = document.getElementById('TarLocslider'); // target location slider
-    const TLnumberInput = document.getElementById('TarLocNum');
+    const Slider = document.getElementById('theSlider');
+    const NumberInput = document.getElementById('theNum');
+    const radio = document.getElementById("setSize");
     // Update number input when slider value changes
-    SSslider.addEventListener('input', () => {
-      SSnumberInput.value = SSslider.value;
-      updateSetSize(SSslider.value);
+    Slider.addEventListener('input', () => {
+      NumberInput.value = Slider.value;
+      if(radio.checked)
+        updateSetSize(Slider.value);
+      else
+        updateTarLoc(Slider.value);
     });
 
     // Update slider when number input value changes
-    SSnumberInput.addEventListener('input', () => {
-      SSslider.value = SSnumberInput.value;
-      updateSetSize(SSnumberInput.value);
+    NumberInput.addEventListener('input', () => {
+      Slider.value = NumberInput.value;
+      updateSetSize(NumberInput.value);
+      if(radio.checked)
+        updateSetSize(Slider.value);
+      else
+        updateTarLoc(Slider.value);
     });
 
-    TLslider.addEventListener('input', () => {
-      TLnumberInput.value = TLslider.value;
-      updateTarLoc(TLslider.value);
-    });
+    // TLslider.addEventListener('input', () => {
+    //   TLnumberInput.value = TLslider.value;
+    //   updateTarLoc(TLslider.value);
+    // });
 
-    // Update slider when number input value changes
-    TLnumberInput.addEventListener('input', () => {
-      TLslider.value = TLnumberInput.value;
-      updateTarLoc(TLnumberInput.value);
-    });
-});
+    // // Update slider when number input value changes
+    // TLnumberInput.addEventListener('input', () => {
+    //   TLslider.value = TLnumberInput.value;
+    //   updateTarLoc(TLnumberInput.value);
+    // });
+  });
+
+  // To set the how to use popup window
+  const helpIcon = document.getElementById('helpIcon');
+  const popup = document.getElementById('popup');
+  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('closeBtn');
+
+  helpIcon.addEventListener('click', () => {
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+  });
+
+  closeBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+  });
+
+  overlay.addEventListener('click', () => {
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+  });
+
   var Feature ={
   targetShape: "rectangle",
   distractorShape: "rectangle",

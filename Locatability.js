@@ -182,6 +182,8 @@ function toggleFeatures(checkboxButton){
 
 function toggleLayouts(radioButton)
 {
+    if(radioButton.id === "gridded" && IsGridded) return;
+    if(radioButton.id === "nongridded" && !IsGridded) return;
     if (radioButton.id === "gridded") {
         //if (radioButton.getAttribute("data-clicked") == "true") {
             radioButton.checked = radioButton.checked;
@@ -196,7 +198,39 @@ function toggleLayouts(radioButton)
             //radioButton.setAttribute("data-clicked", "false");
             document.getElementById('gridded').checked = !radioButton.checked;
         }
-        calcuLocatability();
+    calcuLocatability();
+}
+
+function toggleSetSize(){
+    document.getElementById('tarLocation').checked = false;
+    const Slider = document.getElementById('theSlider');
+    const thNum = document.getElementById('theNum');
+    //reset the min, max and step
+    Slider.min = 12;
+    Slider.value = 12;
+    Slider.max = 768;
+    Slider.step = 1;
+    thNum.value = 12;
+    thNum.max = 12;
+    thNum.min = 768;
+    thNum.step = 1;
+    updateSetSize(12);
+}
+
+function toggleTarLocation(){
+    document.getElementById('setSize').checked = false;
+    const Slider = document.getElementById('theSlider');
+    const thNum = document.getElementById('theNum');
+    //reset the min, max and step
+    Slider.min = 0;
+    Slider.value = 0;
+    Slider.max = 0.8;
+    Slider.step = 0.01;
+    thNum.max = 0;
+    thNum.value = 0;
+    thNum.min = 0.8;
+    thNum.step = 0.01;
+    updateTarLoc(0);
 }
 
 

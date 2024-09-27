@@ -187,9 +187,26 @@ function createGriddedStimulus(container)
   elementPaddingH = elementPaddingH/(+colNum +1)
   var elementPaddingV = (STIMULUSCONTAINERHEIGHT - defaultHeightWidthRatio*rowNum*elementWidth)/(+rowNum+1);
 
-  var targetPos = parseInt(Math.random() * (Factor.elementNumber));
+  //var targetPos = parseInt(Math.random() * (Factor.elementNumber));
   var count = 1;
-  var targetFlag = false;
+  var targetPos = 1;
+  var minDisdiff = 10; // 10 is hard coded number, it can be infinite large
+  for (let i = 0; i < rowNum; i++) {
+    for(let j = 0; j < colNum; j++) {
+      
+      let x = (j+1) * (elementWidth + elementPaddingH)-elementWidth;
+      let y = (i+1) * (elementHeight + elementPaddingV) -elementHeight;
+      let newDisdiff = Math.abs(Math.sqrt((x-4)*(x-4) + (y-3)*(y-3)) - Factor.targetLocation.dis);
+      if(newDisdiff<minDisdiff)
+      {
+        minDisdiff = newDisdiff;
+        targetPos = count;
+      }
+      count++;
+    }
+  }
+
+  count = 1;
   for (let i = 0; i < rowNum; i++) {
     for(let j = 0; j < colNum; j++) {
       const element = document.createElement("div");
@@ -200,9 +217,8 @@ function createGriddedStimulus(container)
       element.style.left = `${x}in`;
       element.style.top = `${y}in`;
       const rect = { x, y, width: targetWidth, height: targetHeight, isTarget: "false"  };
-      if(!targetFlag && Math.abs(Math.sqrt((x-4)*(x-4) + (y-3)*(y-3)) - Factor.targetLocation.dis)<0.5)
+      if(count === targetPos)
       {
-        targetFlag = true;
         element.classList.add(Feature.targetShape);
         element.style.backgroundColor  = Feature.targetColor;
         element.style.width = `${targetWidth}in`;
