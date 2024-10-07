@@ -231,6 +231,7 @@ background-color: yellow;
     font-family: Arial, sans-serif;
     color: #858585;
     margin-left: 1%;
+    cursor: pointer; /* Change cursor to pointer for better UX */
   }
 
 .factor-btn{
@@ -409,6 +410,12 @@ td:hover {
     text-align: center;
     line-height: 2vw; /* Center the exclamation mark vertically */
 }
+
+.help-icon:hover {
+    color: black;
+    background-color: white;
+}
+
 .popup {
     display: none; /* Initially hidden */
     position: fixed;
@@ -429,6 +436,7 @@ td:hover {
     justify-content: space-between; /* Space between items */
 }
 .header-title {
+    color: black;
     flex-grow: 1; /* Allow title to take available space */
     text-align: center; /* Center the title text */
 }
@@ -450,4 +458,37 @@ td:hover {
     right: 10px; /* Position close button to the right */
     top: 10px; /* Position close button at the top */
     font-size: 18px;
+}
+
+
+/*
+    Styles of tooltip
+*/
+.tooltip-container {
+    position: relative;
+    width: 25vw;
+    display: inline-block; /* Allow tooltip to position relative to the text */
+}
+.tooltip-text {
+    visibility: hidden; /* Hide the tooltip by default */
+    width: 20vw; /* Set width of the tooltip */
+    background-color: rgba(0, 0, 0, 0.65); /* Tooltip background color */
+    color: #fff; /* Tooltip text color */
+    text-align: center; /* Center the text */
+    border: solid #fb8072;
+    border-radius: 1vw; /* Rounded corners */
+    padding: 5px; /* Some padding */
+    position: absolute; /* Position it absolutely */
+    z-index: 10; /* On top of other elements */
+    bottom: 125%; /* Position above the text */
+    left: 5%; /* Center it horizontally */
+    margin-left: 2vw; /* Offset for centering */
+    opacity: 0; /* Initially invisible */
+    transition: opacity 0.3s; /* Smooth transition */
+}
+
+
+.tooltip-container:hover  .tooltip-text {
+    visibility: visible; /* Show tooltip on hover */
+    opacity: 1; /* Fade in */
 }

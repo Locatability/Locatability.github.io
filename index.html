@@ -104,7 +104,11 @@
       </div>
 
       <div id = "layouts" class = "factor-container" style = "border-bottom:0; height: 7vh; padding: 5px;">
-        <b class ="factor-des">Pick a factor:</b><br>
+        
+        <div class="tooltip-container">
+          <b class ="factor-des">Pick a factor and input a value for it:</b>
+          <span class="tooltip-text">Due to experiment constraints and potential interactions, the set size and target location cannot be specified simultaneously. When one is provided, the other is assigned randomly.</span>
+        </div><br>
         <input type="radio" style ="margin-top: 5%;" id="setSize" data-clicked="false" value = "Set Size"  onclick="toggleSetSize(this)">
         <label class = "factor-text"  for="setSize"> Set Size </label>
         <input type="radio" id="tarLocation" data-clicked="true" value = "Target Location"  onclick="toggleTarLocation(this)">
@@ -113,7 +117,7 @@
 
       <div id = "factorSlider" class = "factor-container" style = "height: 7vh;">
         <input type="range" style ="margin-top: 5%;" id="theSlider" min="12" max="768" step="1" value="12">
-        <input type="number"  id="theNum" min="12" max="768" step="1" value="12">
+        <input type="number" style="width: 3vw;" id="theNum" min="12" max="768" step="1" value="12">
       </div>
 
       <!-- <div id = "setsizes" class = "factor-container">
@@ -130,7 +134,7 @@
   </div>
 
   <div style ="width: 25vw; background-color: #d0d1e6; border-bottom: 1px solid #000; padding: 5px;">
-    <b style ="  position: relative; left: 2%;">Based on your settings, we recommend utilizing</b>
+    <b style ="  position: relative; left: 2%;">Based on your settings, we suggest utilizing</b>
     <b id = "visualVariable"  style ="  position: relative;
     left: 2%;
     font-size: 1.5vw;
