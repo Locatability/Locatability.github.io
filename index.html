@@ -10,7 +10,7 @@
 
 
 <body>
-  <div id="locatability" style = "height: 15vh; position: relative;">
+  <div id="locatability" style = "height: 15vh; width: 25vw;position: relative;">
       <b  id = "title" style ="  position: absolute;
       width: 20vw;
       top: 5%;
@@ -103,7 +103,7 @@
         <label class = "factor-text"  for="nongridded"> Non-Grid Layouts </label>
       </div>
 
-      <div id = "layouts" class = "factor-container" style = "border-bottom:0; height: 7vh; padding: 5px;">
+      <div id = "numfactors" class = "factor-container" style = "border-bottom:0; height: 7vh;">
         
         <div class="tooltip-container">
           <b class ="factor-des">Pick a factor and input a value for it:</b>
@@ -133,7 +133,12 @@
       </div> -->
   </div>
 
-  <div id = 'output-txt' style ="width: 25vw; background-color: #d0d1e6; border-bottom: 1px solid #000; padding: 5px;">
+  <div id = 'output-txt' style ="width: 25vw; 
+            background-color: #d0d1e6;
+            border-bottom: 1px solid #000;
+            word-wrap: break-word; /* Break long words */
+            white-space: normal; /* Normal whitespace handling */
+              ">
     <b id = 'outtxt1' style ="  position: relative; text-align: center; left: 2%;">Based on your settings, we suggest utilizing</b>
     <b id = "visualVariable"  style ="  position: relative;
     left: 2%;

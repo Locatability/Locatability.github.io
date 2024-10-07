@@ -303,7 +303,7 @@ function calcuLocatability(){
         const Time = document.getElementById('taskTime');
         VisualVariable.innerText = "";
         Time.innerText = "";
-        txt1.innerText = "No visual variables are available. Please \nenable at least one visual variable.";
+        txt1.innerText = "No visual variables are available. Please enable at least one visual variable.";
         txt2.innerText = "";
         txt3.innerText = "";
     }
