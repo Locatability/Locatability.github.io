@@ -282,10 +282,32 @@ function calcuLocatability(){
             timeOfVariables.push(Math.floor(loc[1]));
         }
     }
-    const VisualVariable = document.getElementById('visualVariable');
-    VisualVariable.innerText = orderOfVariables[0];
-    const Time = document.getElementById('taskTime');
-    Time.innerText = timeOfVariables[0];
+    if(orderOfVariables.length >0)
+    {
+        const VisualVariable = document.getElementById('visualVariable');
+        VisualVariable.innerText = orderOfVariables[0];
+        const Time = document.getElementById('taskTime');
+        Time.innerText = timeOfVariables[0];
+        const txt1 = document.getElementById('outtxt1');
+        const txt2 = document.getElementById('outtxt2');
+        const txt3 = document.getElementById('outtxt3');
+        txt1.innerText = "Based on your settings, we suggest utilizing";
+        txt2.innerText = "which will take approximately";
+        txt3.innerText = " milliseconds to find the target.  ";
+    }
+    else{
+        const VisualVariable = document.getElementById('visualVariable');
+        const txt1 = document.getElementById('outtxt1');
+        const txt2 = document.getElementById('outtxt2');
+        const txt3 = document.getElementById('outtxt3');
+        const Time = document.getElementById('taskTime');
+        VisualVariable.innerText = "";
+        Time.innerText = "";
+        txt1.innerText = "No visual variables are available. Please \nenable at least one visual variable.";
+        txt2.innerText = "";
+        txt3.innerText = "";
+    }
+
     //const OrderInfo = document.getElementById('orderInfo');
     // var inforToshow = "";
     // for (let i = 1; i < orderOfVariables.length; i++) {
@@ -369,7 +391,6 @@ function calcuLocatability(){
         }
             
         Factor.spatialPattern = IsGridded?"Gridded":"Randomized";
-        console.log(Factor)
         generateStimulus(Feature,Factor); 
     }
     createTable(orderOfVariables,timeOfVariables);
