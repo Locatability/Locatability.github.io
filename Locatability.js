@@ -1,82 +1,83 @@
-const Features =["Luminance", "D3Color","Hue","Size", "Orientation","Length","Shape"];
+const Features =["Luminance", "Single-Hue","Hue","Size", "Orientation","Length","Shape"];
+
 const GriddedSetSizeSlope = {
-    "Size":0.03304,
-    "D3Color":0.04369,
-    "Luminance":0.05622,
-    "Orientation":0.05328,
-    "Hue":0.06462,
-    "Length":0.09473,
-    "Shape":0.1743,
+    "Luminance":0.03174368254,
+    "Single-Hue":0.03076511941,
+    "Hue":0.03164901116,
+    "Size":0.0297639753,
+    "Orientation":0.03725353099,
+    "Length":0.04496314449,
+    "Shape":0.08919422292,
 };
 
 const GriddedSetSizeIntercept = {
-    "Size":2.833,
-    "D3Color":2.776,
-    "Luminance":2.738,
-    "Orientation":2.799,
-    "Hue":2.748,
-    "Length":2.748,
-    "Shape":2.781,
+    "Luminance":2.830625809,
+    "Single-Hue":2.8372974,
+    "Hue":2.836450319,
+    "Size":2.872168275,
+    "Orientation":2.842781759,
+    "Length":2.843615669,
+    "Shape":2.797396129,
 };
 
 const NonGriddedSetSizeSlope = {
-    "Size":0.05352,
-    "D3Color":0.028,
-    "Luminance":0.05520,
-    "Orientation":0.07953,
-    "Hue":0.04964,
-    "Length":0.1464,
-    "Shape":0.1473,
+    "Luminance":0.01511983393,
+    "Single-Hue":0.01398800845,
+    "Hue":0.01585335549,
+    "Size":0.02448474123,
+    "Orientation":0.03043425427,
+    "Length":0.04979275278,
+    "Shape":0.07253422123,
 };
 
 const NonGriddedSetSizeIntercept = {
-    "Size":2.792,
-    "D3Color":2.788,
-    "Luminance":2.790,
-    "Orientation":2.745,
-    "Hue":2.758,
-    "Length":2.690,
-    "Shape":2.820,
+    "Luminance":2.830275848,
+    "Single-Hue":2.826498971,
+    "Hue":2.839412415,
+    "Size":2.827460051,
+    "Orientation":2.841864805,
+    "Length":2.773396177,
+    "Shape":2.845315368,
 };
 
 const GriddedTarLocSlope = {
-    "Size":0.1144680,
-    "D3Color":0.1032850,
-    "Luminance":0.0478935,
-    "Orientation":0.0478935,
-    "Hue":0.1475980,
-    "Length":0.1230170,
-    "Shape":0.8284310,
+    "Luminance":0.2185643433,
+    "Single-Hue":0.1872719295,
+    "Hue":0.3096378739,
+    "Size":0.1899171633,
+    "Orientation":0.2836253385,
+    "Length":0.4076913763,
+    "Shape":0.7868858705,
 };
 
 const GriddedTarLocIntercept = {
-    "Size":2.85732,
-    "D3Color":2.83214,
-    "Luminance":2.83403,
-    "Orientation":2.87242,
-    "Hue":2.82725,
-    "Length":2.88998,
-    "Shape":2.82883,
+    "Luminance":2.984387345,
+    "Single-Hue":2.986498576,
+    "Hue":2.969702956,
+    "Size":3.022328281,
+    "Orientation":2.987290853,
+    "Length":3.001010664,
+    "Shape":3.011811926,
 };
 
 const NonGriddedTarLocSlope = {
-    "Size":0.1339710,
-    "D3Color":0.0948123,
-    "Luminance":0.05520,
-    "Orientation":0.2411680,
-    "Hue":0.1552810,
-    "Length":0.4114900,
-    "Shape":1.0051200,
+    "Luminance":0.144347,
+    "Single-Hue":0.143001,
+    "Hue":0.197786,
+    "Size":0.191495,
+    "Orientation":0.377766,
+    "Length":0.420153,
+    "Shape":0.670161,
 };
 
 const NonGriddedTarLocIntercept = {
-    "Size":2.80855,
-    "D3Color":2.85941,
-    "Luminance":2.84695,
-    "Orientation":2.83202,
-    "Hue":2.84832,
-    "Length":2.80283,
-    "Shape":2.77721,
+    "Size":3.01895,
+    "Single-Hue":3.01629,
+    "Luminance":3.01263,
+    "Orientation":3.03216,
+    "Hue":3.03766,
+    "Length":3.03043,
+    "Shape":3.07937,
 };
 
 const WIHTE = "hsl(0, 0%, 100%)";
@@ -355,7 +356,7 @@ function calcuLocatability(){
             Feature.targetColor = WIHTE;
             Feature.distractorColor = BLACK;
         }
-        if(theFea === Features[1]){ // D3Color
+        if(theFea === Features[1]){ // Single-Hue
             Feature.targetColor = D3TARGET;
             Feature.distractorColor = D3DISTRACTOR;
         }
