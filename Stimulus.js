@@ -754,3 +754,13 @@ function generateStimulus(featureData, factorData) {
       }
     //drawFocusArea(stimulusContainer);
 }
+
+function getFeature(){return Feature;}
+
+function getFactor(){return Factor;}
+
+// Refresh the page, basically just recall generateStimulus when window size changes
+function refreshStimulus ()
+{
+  generateStimulus(getFeature(), getFactor()) 
+}

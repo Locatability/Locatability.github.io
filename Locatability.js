@@ -36,7 +36,7 @@ const NonGriddedSetSizeIntercept = {
     "Hue":2.839412415,
     "Size":2.827460051,
     "Orientation":2.841864805,
-    "Length":2.773396177,
+    "Length":2.793396177,
     "Shape":2.845315368,
 };
 
@@ -271,7 +271,7 @@ function calcuLocatability(){
     });
     const objLocat = Object.entries(locatabilities);
     
-    // Step 2: Sort the array by value
+    //Sort the array by value
     objLocat.sort((a, b) => a[1] - b[1]); // Ascending order
     var theFea = "Luminance";
     var orderOfVariables = [];
@@ -309,20 +309,12 @@ function calcuLocatability(){
         txt3.innerText = "";
     }
 
-    //const OrderInfo = document.getElementById('orderInfo');
-    // var inforToshow = "";
-    // for (let i = 1; i < orderOfVariables.length; i++) {
-    //     inforToshow  = inforToshow + orderOfVariables[i] + "    " + timeOfVariables[i] + " milliseconds\n";
-    // }
+    //Update the example
     if (orderOfVariables.length < 1){
         hideAllElements();
     }
     else{
-        //document.getElementById('stimulus-container').style.display = 'block'
         theFea = orderOfVariables[0];
-        //OrderInfo.innerText = inforToshow;
-
-
         // Step 3: Update the example stimulus
         var Feature ={
             targetShape: "rectangle",
@@ -392,10 +384,15 @@ function calcuLocatability(){
         }
             
         Factor.spatialPattern = IsGridded?"Gridded":"Randomized";
-        generateStimulus(Feature,Factor); 
+        var currentFactor = getFactor();
+        if (IsSSActive && (currentFactor.elementNumber!=SetSizeValue ||currentFactor.spatialPattern!=Factor.spatialPattern || getFeature().activeFeature != theFea))
+            generateStimulus(Feature,Factor);
+        else if (!IsSSActive && (Math.abs(currentFactor.targetLocation.dis - Factor.targetLocation) < 0.001 ||currentFactor.spatialPattern!=Factor.spatialPattern || getFeature().activeFeature != theFea))
+            generateStimulus(Feature,Factor);
     }
     createTable(orderOfVariables,timeOfVariables);
 }
+
 
 function tarLoc2Coor(dis){ // convert distance between target to center to a coordinate (x,y) 
     dis = Number(dis);
@@ -405,7 +402,7 @@ function tarLoc2Coor(dis){ // convert distance between target to center to a coo
     let xMax = dis < 2/3 ? 2/3 + dis:4/3;
     let theX;
     let randomFlag;
-    while(theY<0.01 || theY > 0.99)
+    while(theY<0.04 || theY > 0.96)
     {
         theX = Math.random()* (xMax - xMin ) + xMin;
         randomFlag = Math.random() > 0.5 ? true:false;

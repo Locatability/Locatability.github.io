@@ -13,12 +13,12 @@
   <div id="locatability" style = "height: 15vh; width: 25vw;position: relative;">
       <b  id = "title" style ="  position: absolute;
       width: 20vw;
-      top: 5%;
+      top: 1%;
       left: 3%;">Locatability</b>
       <span class="help-icon" id="helpIcon">i</span>
       <b  style ="  position: absolute;
       width: 20vw;
-      top: 60%;
+      top: 50%;
       left: 3%;
       font-size: 1.5vw;
       font-family: Arial, sans-serif;
@@ -35,11 +35,11 @@
       <p>This is a tool that helps you select visual variables for your visualization and UX design. 
         The tool models the locatability of seven visual variables with respect to three factors - Layout, Set Size, and 
         Target Location. To use the tool, </p>
-      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">1. Choosing the visual variables that are available for your design by toggling on / off the variables at top.</p>
-      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">2. Choosing a layout for your design.</p>
-      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">3. Choosing a factor from set size and target location and input a value for it. Set size is the number of objects that your design will have. 
+      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">1. Choose the visual variables that are available for your design by toggling on / off the variables at top.</p>
+      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">2. Choose a layout for your design.</p>
+      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">3. Choose a factor from set size and target location and input a value for it. Set size is the number of objects that your design will have. 
         Target location describes the distance from your target to the center of the display.
-      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">4. Selecting the appropriate visual variable(s) based on our recommendations (Shown in bottom left).</p>
+      <p style ="font-size: 1.5vw;font-family: Arial, sans-serif; color: #9498a0;">4. Select the appropriate visual variable(s) based on our recommendations (Shown in bottom left).</p>
       </p>
     </div>
 
@@ -78,14 +78,14 @@
         <div class="exampleRect" style =" transform: rotate(45deg);"></div>
         <div class="exampleRect" style =" left: 75%;"></div>
       </div>
-      <div class = "feature-container" style ="left: 72%;">  
+      <div class = "feature-container" style ="left: 70%;">  
         <input type="checkbox" id="Length" value = "Length" checked  onclick="toggleFeatures(this)">
         <label class = "feature-text" >Length</label>
         <div class="exampleRect" ></div>
         <div class="exampleRect" style =" left: 75%; height: 4vh;"></div>
 
       </div>
-      <div class = "feature-container" style ="left: 86%;">
+      <div class = "feature-container" style ="left: 84%;">
         <input type="checkbox" id="Shape" value = "Shape" checked  onclick="toggleFeatures(this)">
         <label class = "feature-text" >Shape</label>
         <div class="exampleRect"  style ="width: 2.38vh; height: 7.13vh;  transform: rotate(45deg);"></div>
@@ -182,6 +182,8 @@
 <script>
   document.getElementById('nongridded').checked = true;
   document.getElementById('setSize').checked = true;
+  //Call reaDat2Map function on window resize
+  window.addEventListener("resize", refreshStimulus);
   //document.getElementById('setsize').addEventListener('input', updateSetSize);
   document.addEventListener('DOMContentLoaded', () => {
     const Slider = document.getElementById('theSlider');
