@@ -432,7 +432,7 @@ function draw() {
   /* ----------------------------------------------------------
      PLOT RANGE
      ---------------------------------------------------------- */
-
+  const pad = { left: 68, right: 30, top: 28, bottom: 58 };
   const xMin = 0;
   const xMax = model.P3.x;
 
@@ -588,6 +588,18 @@ function draw() {
     );
   }
 
+   // Axis labels
+  ctx.fillStyle = "#4f5b66";
+  ctx.font = "12px Inter, system-ui, sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("Localization time (s)", (pad.left + width - pad.right) / 2, height - 13);
+
+  ctx.save();
+  ctx.translate(17, (pad.top + height - pad.bottom) / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText("Target–distractor difference (TDD)", 0, 0);
+  ctx.restore();
+
   ctx.restore();
 
 
@@ -633,6 +645,44 @@ function draw() {
     ctx.restore();
   }
 
+  /* ----------------------------------------------------------
+     JLT LINE
+     ---------------------------------------------------------- */
+
+  const jlt =
+    getJLT(model);
+
+  
+
+    const px =
+      sx(jlt);
+
+    ctx.save();
+
+    ctx.strokeStyle = "#d94c4c";
+    ctx.lineWidth = 1;
+    ctx.setLineDash([6, 5]);
+
+    ctx.beginPath();
+    ctx.moveTo(px, plotTop);
+    ctx.lineTo(px, plotBottom);
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = "#d94c4c";
+    ctx.font = "11px Arial";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "bottom";
+
+    ctx.fillText(
+      `JLT = ${jlt.toFixed(3)} s`,
+      px+6,
+      plotBottom - 5 
+    );
+
+    ctx.restore();
+
 
   /* ----------------------------------------------------------
      PLD10 / PLT10
@@ -642,74 +692,74 @@ function draw() {
      PLD10 = 10% above JLD.
   */
 
-  const pld10 =
-    jld * 1.10;
+  // const pld10 =
+  //   jld * 1.10;
 
-  if (
-    pld10 >= yMin &&
-    pld10 <= yMax
-  ) {
+  // if (
+  //   pld10 >= yMin &&
+  //   pld10 <= yMax
+  // ) {
 
-    const result =
-      pointAtY(
-        pld10,
-        model
-      );
+  //   const result =
+  //     pointAtY(
+  //       pld10,
+  //       model
+  //     );
 
-    const p =
-      result.point;
+  //   const p =
+  //     result.point;
 
-    const px =
-      sx(p.x);
+  //   const px =
+  //     sx(p.x);
 
-    const py =
-      sy(p.y);
+  //   const py =
+  //     sy(p.y);
 
-    ctx.save();
+  //   ctx.save();
 
-    ctx.strokeStyle = "#b0b5bd";
-    ctx.lineWidth = 1;
-    ctx.setLineDash([4, 4]);
+  //   ctx.strokeStyle = "#b0b5bd";
+  //   ctx.lineWidth = 1;
+  //   ctx.setLineDash([4, 4]);
 
-    /*
-       Horizontal PLD10 line
-    */
+  //   /*
+  //      Horizontal PLD10 line
+  //   */
 
-    ctx.beginPath();
-    ctx.moveTo(plotLeft, py);
-    ctx.lineTo(px, py);
-    ctx.stroke();
+  //   ctx.beginPath();
+  //   ctx.moveTo(plotLeft, py);
+  //   ctx.lineTo(px, py);
+  //   ctx.stroke();
 
-    /*
-       Vertical PLT10 line
-    */
+  //   /*
+  //      Vertical PLT10 line
+  //   */
 
-    ctx.beginPath();
-    ctx.moveTo(px, py);
-    ctx.lineTo(px, plotBottom);
-    ctx.stroke();
+  //   ctx.beginPath();
+  //   ctx.moveTo(px, py);
+  //   ctx.lineTo(px, plotBottom);
+  //   ctx.stroke();
 
-    ctx.setLineDash([]);
+  //   ctx.setLineDash([]);
 
-    /*
-       PLD10 point
-    */
+  //   /*
+  //      PLD10 point
+  //   */
 
-    ctx.beginPath();
+  //   ctx.beginPath();
 
-    ctx.arc(
-      px,
-      py,
-      5,
-      0,
-      Math.PI * 2
-    );
+  //   ctx.arc(
+  //     px,
+  //     py,
+  //     5,
+  //     0,
+  //     Math.PI * 2
+  //   );
 
-    ctx.fillStyle = "#9ca3af";
-    ctx.fill();
+  //   ctx.fillStyle = "#9ca3af";
+  //   ctx.fill();
 
-    ctx.restore();
-  }
+  //   ctx.restore();
+  // }
 
 
   /* ----------------------------------------------------------
