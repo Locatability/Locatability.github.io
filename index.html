@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TDD-T Curve Explorer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <!-- <div class="eyebrow">VISUALIZATION RESEARCH TOOL</div> -->
+      <h1>TDD-T Curve Explorer</h1>
+      <p>Explore the relationship between Target–Distractor Difference (TDD) and Time for localization tasks.</p>
+    </div>
+  </header>
+
+  <main class="app">
+    <!-- Selection controls --> 
+  <section class="selection-controls" aria-label="Visualization controls"> 
+    <!-- Visual variable --> 
+     <div class="control-group"> 
+      <div class="section-label">Visual variable</div> 
+      <div id="variableButtons" class="variable-buttons"></div> 
+    </div> <!-- Vertical divider --> 
+    <div class="control-divider" aria-hidden="true"></div> 
+    <!-- Target location --> 
+     <div class="control-group"> 
+      <div class="section-label">Target location</div> 
+      <div id="targetLocationButtons" class="variable-buttons"></div> 
+    </div> 
+  </section>
+    
+    <section class="workspace">
+      <aside class="panel">
+        <div class="panel-header">
+          <span id="variableName">Hue</span>
+          <!-- <span class="pill">Quadratic Bézier</span> -->
+        </div>
+
+        <div class="selected-card">
+          <div class="small-label">Localization time required </div>
+          <div class="big-value" id="selectedTime">0.00 s</div>
+          <div class="small-label">Target–Distractor Difference (TDD) required</div>
+          <div class="big-value" id="selectedTDD">0.00 </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span>JLD</span><strong id="jld">—</strong>
+          </div>
+          <div class="metric">
+            <span>JLT</span><strong id="jlt">—</strong>
+          </div>
+          <div class="metric">
+            <span>Above JLD</span><strong id="aboveJld">—</strong>
+          </div>
+          <div class="metric">
+            <span>PLD<sub>10</sub></span><strong id="pld10">—</strong>
+          </div>
+          <div class="metric">
+            <span>PLT<sub>10</sub></span><strong id="plt10">—</strong>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="readout">
+          <div class="small-label">Note</div>
+          <!-- <div class="slider-row">
+            <span>t</span>
+            <input id="curveSlider" type="range" min="0" max="1" step="0.001" value="0.5">
+            <output id="tValue">0.500</output>
+          </div> -->
+          <p id="interpretation"> We model the TDD-T relationship with two Quadratic Bézier curves.</p>
+        </div> 
+      </aside>
+
+      <section class="chart-panel">
+        <div class="chart-header">
+          <div>
+            <h2>TDD–Time relationship</h2>
+            <p>Drag the point along the curve to explore the trade-off between TDD and localization time.</p>
+          </div>
+          <div class="legend">
+            <span><i class="dot curve-dot"></i> Model</span>
+            <span><i class="dot jld-dot"></i> JLD</span>
+            <span><i class="dot selected-dot"></i> Selected</span>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <canvas id="chart"></canvas>
+        </div>
+
+        <div class="chart-note">
+          <span>JLD = Just Locatable Difference</span>
+          <span>JLT = Just Locatable Time</span>
+          <span>PLT<sub>10</sub> = time at 10% above JLD</span>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
